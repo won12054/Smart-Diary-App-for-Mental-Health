@@ -1,0 +1,65 @@
+.diary-area {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 8px; /* Rounded corners */
+  border: 1px solid #ccc; /* Border color */
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* Add a slight shadow */
+}
+
+.diary-h1 {
+  align-self: flex-end;
+  margin-right: 20px;
+}
+
+.result-area {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 8px; /* Rounded corners */
+  border: 1px solid #ccc; /* Border color */
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* Add a slight shadow */
+}
+
+.result-area p {
+  margin-left: 20px;
+}
+
+.result-h1 {
+  margin-left: 20px;
+}
+
+.diary-area textarea {
+  font-family: inherit;
+  resize: vertical;
+  margin: 0 10px;
+  margin-bottom: 15px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px; /* Rounded corners */
+  border: 1px solid #ccc; /* Border color */
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* Add a slight shadow */
+}
+
+.diary-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  /* background-color: red; */
+}
+
+.diary-buttons button {
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text */
+  padding: 10px 20px; /* Padding to make the button larger */
+  font-size: 16px; /* Font size */
+  border: none; /* Remove borders */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for a clean look */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.diary-buttons button:hover {
+}

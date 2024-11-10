@@ -1,0 +1,9 @@
+.charts-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .line-chart, .doughnut-chart {
+    width: 48%;
+  }
+  

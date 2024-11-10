@@ -1,0 +1,84 @@
+[
+    {
+        "class": "depression",
+        "description": "Support for individuals dealing with depression and related mental health issues.",
+        "suggestions": [
+            "Consider reaching out to a mental health professional.",
+            "Eating well can improve your wellbeing and your mood. A balanced diet is one that includes healthy amounts of proteins, essential fats, complex carbohydrates, vitamins, minerals, and water. The food we eat can influence the development, management, and prevention of numerous mental health conditions, including depression and dementia.",
+            "There are several different types of antidepressants, so talk to your general physician about which one might suit you best. If one doesn’t work, you may be prescribed another. You usually need to take them for one or two weeks before you start to feel the benefit.",
+            "Establish a routine with small, manageable goals.",
+            "Practice self-care, even if it’s just a small step like drinking water.",
+            "Start with small, enjoyable physical activities like a short walk to boost mood.",
+            "Choose activities you genuinely enjoy, such as dancing, yoga, or nature walks, to keep motivation high.",
+            "Be kind to yourself, focusing on progress rather than perfection as you build a physical activity habit.",
+            "Try group activities or invite a friend to join you, as social interaction can boost motivation and reduce isolation.",
+            "Listen to your favorite music during exercise to make it more enjoyable and energizing.",
+            "Track your mood after each activity to reinforce the positive effects and maintain motivation."
+        ]
+    },
+    {
+        "class": "bipolar",
+        "description": "Resources and support for those living with bipolar disorder.",
+        "suggestions": [
+            "Keep a mood journal to track your emotional fluctuations.",
+            "Consider lifestyle advice such as regular exercise, planning activities you enjoy that give you a sense of achievement, improving your diet, and getting more sleep.",
+            "Learn to recognize the triggers and signs of an episode of depression or mania.",
+            "Work closely with a psychiatrist to establish an effective medication plan.",
+            "Consider a combination of medication, personal therapy, and, if needed, family therapy.",
+            "Stay connected to a peer support group for understanding and encouragement.",
+            "Create a daily routine to add structure and predictability to your day.",
+            "Limit exposure to stress and maintain healthy sleep patterns to help manage mood swings.",
+            "Engage in regular physical activity or hobbies that promote relaxation and enjoyment.",
+            "Involve family or close friends in your support plan for added stability.",
+            "Educate yourself about bipolar disorder to better understand your condition and manage symptoms.",
+            "Develop a personalized crisis plan with your mental health team for managing extreme mood episodes.",
+            "Develop a plan with a therapist to manage mood swings.",
+            "Stay connected to supportive people who understand your condition."
+        ]
+    },
+    {
+        "class": "anxiety",
+        "description": "A place to talk about anxiety and find coping mechanisms.",
+        "suggestions": [
+            "Try breathing exercises to calm yourself in the moment.",
+            "Learn to relax. Yoga, muscle relaxation, biofeedback, and deep breathing can all help you deal with anxieties. For muscle relaxation, lie down and focus on one muscle group at a time, starting with your feet or your head. Tense the muscle for a few seconds then let it go. Move on to the next muscle.",
+            "Break tasks down into smaller, manageable steps.",
+            "Get plenty of sleep; it will help you put things in perspective.",
+            "Confront the things that have made you anxious in the past. Start by making a list. Picture yourself confronting these situations to develop techniques before you are actually anxious. Try examining the level of your anxiety on a scale of one to 10.",
+            "Exercise regularly; it can give you a sense of well-being and help lessen anxiety.",
+            "Avoid alcohol and recreational drugs as a quick solution. Although they may seem to relax you, afterward they can lead to even more anxiety and depression.",
+            "Avoid caffeine in coffee, tea, soft drinks, and chocolate, as it can increase anxiety. Also avoid over-the-counter diet pills, and cough and cold medications.",
+            "Ambient music has been found to lower stress hormone cortisol. It can help individuals find solace during times of anxiety and tension.",
+            "Find a quiet space where you can retreat and listen to calming sounds during stressful moments.",
+            "Playlist: Relaxing nature music with sounds of water, gentle rainfall, ocean waves, waterfalls, streams, creeks, with ambient instrumental background music (piano, guitar, cello, flute). Great for sleep, study, reading, and pets. [Link](https://open.spotify.com/playlist/219WFc5IlIzo2ltWvBQ3eZ).",
+            "Low-intensity exercise can help reduce stress, lower cortisol, improve psychological wellbeing, and improve sleep quality.",
+            "Exercise regularly, even if it’s just a short walk.",
+            "Stick to regular eating and sleeping habits as much as possible and eat a healthy diet.",
+            "Learn relaxation techniques, such as slow breathing and progressive muscle relaxation.",
+            "Develop the habit of mindfulness meditation, even if it’s just a few minutes per day.",
+            "Try to get enough sleep – this can help you have the energy to cope with difficult feelings and experiences.",
+            "Do not focus on the things you cannot change – focus your time and energy on helping yourself feel better.",
+            "Do not avoid situations that make you anxious – try slowly building up time spent in worrying situations to gradually reduce anxiety.",
+            "This calming breathing technique for stress, anxiety, and panic takes just a few minutes and can be done anywhere. You will benefit if you do it regularly, as part of your daily routine."
+        ]
+    },
+    {
+        "class": "suicide watch",
+        "description": "Help and support for individuals experiencing suicidal thoughts.",
+        "suggestions": [
+            "Please seek immediate help from a professional or crisis hotline. Help is available 24/7 for suicide prevention and mental health. Here are some resources:\n- Talk Suicide Canada: 1-833-456-4566 (or text 45645 from 4pm to midnight ET)\n- For Quebec residents: 1-866-APPELLE (277-3553)\n- Kids Help Phone: 1-800-668-6868 or text CONNECT to 686868\n- Hope for Wellness Helpline for Indigenous peoples: 1-855-242-3310\n- Trans Lifeline: 1-877-330-6366",
+            "Remember that these feelings are temporary, and help is available.",
+            "Try to remove yourself from any immediate danger and reach out to someone you trust.",
+            "Build a crisis safety plan with steps to follow when feeling overwhelmed.",
+            "Maintain open communication with someone you trust to discuss difficult emotions.",
+            "Seek professional mental health support through therapy or counseling services.",
+            "Engage in grounding activities that bring calm, such as deep breathing or mindfulness exercises.",
+            "Participate in support groups to connect with others who understand similar experiences.",
+            "Limit exposure to negative media and focus on positive, hopeful content.",
+            "Practice self-compassion and acknowledge personal strengths and achievements.",
+            "Stay active through exercise or hobbies to improve mental and physical health.",
+            "Reach out to community-based programs or helplines for accessible support options.",
+            "Create daily routines that include nourishing meals, rest, and engaging activities to boost resilience."
+        ]
+    }
+]
