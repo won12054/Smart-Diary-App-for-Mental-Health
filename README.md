@@ -1,9 +1,9 @@
 # AICapstone
 By
-Alejandro Akifarry
-Jungyu Lee 
-Pak Wah Wong 
-Pratheepan Gunaratnam 
+Alejandro Akifarry,
+Jungyu Lee,
+Pak Wah Wong, 
+Pratheepan Gunaratnam, 
 Sirada Thoungvitayasutee 
 
 ## For the backend
