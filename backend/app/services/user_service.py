@@ -21,17 +21,20 @@ class UserService:
 
     def update_user(self, id: str, user: UserUpdate):
         user = {k: v for k, v in user.items() if v is not None}
+
+        # Check if user exists
+        existing_user = self.collection.find_one({"_id": id})
+        if not existing_user:
+            raise Exception(f"User with ID {id} not found")
+        
         if len(user) >= 1:
             update_result = self.collection.update_one(
                 {"_id": id}, {"$set": user}
             )
+
+            # If unmodified, it means there is nothing to update
+            # so just return the user info
             if update_result.modified_count == 0:
-                raise Exception(f"User with ID {id} not found")
+                return existing_user
 
         return self.collection.find_one({"_id": id})
-
-    def delete_user(self, id: str):
-        delete_result = self.collection.delete_one({"_id": id})
-        if delete_result.deleted_count != 1:
-           raise Exception(f"User with ID {id} not found")
-        return delete_result

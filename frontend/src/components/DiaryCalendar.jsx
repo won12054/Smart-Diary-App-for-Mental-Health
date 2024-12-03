@@ -51,7 +51,6 @@ const DiaryCalendar = () => {
           day: CustomPickersDay,
         }}
         sx={{
-          paddingTop: '10px',
           width: '100%',
           height: '100%',
         }}

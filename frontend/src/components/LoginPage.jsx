@@ -1,108 +1,103 @@
 import React, { useState } from 'react';
-
-// Import services
 import authService from "../services/auth-service";
-import { responsiveFontSizes } from '@mui/material';
+import { Link, Box, TextField, Button, Typography, Alert, InputAdornment, IconButton, OutlinedInput } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const LoginPage = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    
+
     authService.login(username, password)
-    .then((response) => {
-      console.log(response.data);
-      const accessToken = response.data.access_token;
-      localStorage.setItem("access_token", accessToken);
-
-      return authService.getUserInfo(accessToken);
-    })
-    .then((userInfoResponse) => {
-      console.log(userInfoResponse.data);
-      const role = userInfoResponse.data["role"];
-      onLogin(role)
-    })
-    .catch((e) => {
-      console.log(e);
-      setError('Invalid username or password');
-    });
-
+      .then((response) => {
+        const accessToken = response.data.access_token;
+        localStorage.setItem("accessToken", accessToken);
+        onLogin();
+      })
+      .catch((e) => {
+        setError('Invalid username or password');
+      });
   };
 
   return (
-    <div style={styles.container}>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <label style={styles.label}>
-          Username:
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            style={styles.input}
-            required
-          />
-        </label>
-        <label style={styles.label}>
-          Password:
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={styles.input}
-            required
-          />
-        </label>
-        <button type="submit" style={styles.button}>Login</button>
-        {error && <p style={styles.error}>{error}</p>}
+    <Box
+      sx={{
+        maxWidth: 500,
+        mx: 'auto',
+        width: '100%',
+        mt: 3,
+        p: 3,
+        boxShadow: 3,
+        borderRadius: 2,
+        backgroundColor: 'white'
+      }}
+    >
+      <Typography variant="h5" align="center" mb={3}>
+        Login
+      </Typography>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          label="Username"
+          name="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Password"
+          name="password"
+          type={showPassword ? 'text' : 'password'}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          fullWidth
+          margin="normal"
+          slotProps={{
+            input: {
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={togglePasswordVisibility}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            },
+          }}
+        />
+        {error && (
+          <Alert severity="error" sx={{ mt: 2 }}>
+            {error}
+          </Alert>
+        )}
+        <Typography align='center' sx={{ my: 1 }}>
+          Don't have an account? <Link href="/register" underline="hover">Register Here</Link>
+        </Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          type="submit"
+          sx={{ mt: 1 }}
+        >
+          Login
+        </Button>
       </form>
-    </div>
+    </Box>
   );
-};
-
-const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'flex-start', 
-    padding: '20px',
-    height: '100vh', 
-    margin: '0 auto',
-    maxWidth: '400px'
-  },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    maxWidth: '300px',
-    width: '100%',
-  },
-  label: {
-    marginBottom: '10px',
-  },
-  input: {
-    width: '100%',
-    padding: '8px',
-    marginBottom: '10px',
-    borderRadius: '4px',
-    border: '1px solid #ccc',
-  },
-  button: {
-    padding: '10px',
-    borderRadius: '4px',
-    backgroundColor: '#4CAF50',
-    color: 'white',
-    border: 'none',
-    cursor: 'pointer',
-  },
-  error: {
-    color: 'red',
-    marginBottom: '10px',
-  },
 };
 
 export default LoginPage;

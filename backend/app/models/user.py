@@ -29,7 +29,7 @@ class User(BaseModel):
 
 class UserUpdate(BaseModel):
     username: Optional[str]
-    password: Optional[str]
+    password: Optional[str] = None
     email: Optional[str]
     full_name: Optional[str]
     disabled: Optional[bool]
@@ -45,5 +45,25 @@ class UserUpdate(BaseModel):
                 "full_name": "Pak",
                 "disabled": "false",
                 "updated": "2032-04-23T10:20:30.400+02:30"
+            }
+        }
+
+class UserSummary(BaseModel):
+    anxiety_count: Optional[int]
+    bipolar_count: Optional[int]
+    depression_count: Optional[int]
+    other_count: Optional[int]
+    suicide_count: Optional[int]
+    user_id: Optional[str]
+    username: Optional[str]
+
+class UserPwdReset(BaseModel):
+    password: Optional[str]
+    updated: datetime = Field(default_factory=datetime.now)
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "password": "secret"
             }
         }

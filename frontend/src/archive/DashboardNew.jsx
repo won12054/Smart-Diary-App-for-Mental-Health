@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import MoodTrend from './MoodTrend';
+import MoodTrend from '../components/MoodTrend';
 import { 
   Box, 
   Typography, 
@@ -18,7 +18,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import diaryEntryService from "../services/diary-entry-service";
 
 // Import components
-import DiaryCalendar from './DiaryCalendar';
+import DiaryCalendar from '../components/DiaryCalendar';
 
 const DashboardNew = () => {
   const [streak, setStreak] = useState(-1);
@@ -30,14 +30,12 @@ const DashboardNew = () => {
   useEffect(() => {
     diaryEntryService.getStreak().then((response) => {
       setStreak(response.data["streak"]);
-      console.log(response.data);
     }).catch((e) => {
       console.log(e);
     });
 
     diaryEntryService.getMaxStreak().then((response) => {
       setMaxStreak(response.data["max_streak"]);
-      console.log(response.data);
     }).catch((e) => {
       console.log(e);
     });
