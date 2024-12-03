@@ -1,5 +1,5 @@
 # AICapstone
-
+By Alejandro Akifarry, Jungyu Lee, Pak Wah Wong, Pratheepan Gunaratnam, Sirada Thoungvitayasutee
 ## For the backend
 1. Modify environment variables inside the file '.env.example' and then save as '.env'
 2. Create environment (e.g. conda create aicapstone)
