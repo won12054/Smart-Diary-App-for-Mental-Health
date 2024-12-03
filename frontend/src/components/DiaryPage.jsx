@@ -14,7 +14,12 @@ import diaryEntryService from "../services/diary-entry-service";
 import 'reactjs-popup/dist/index.css';
 import "../styles/DiaryPage.css";
 
-const DiaryPage = () => {
+// Import mui components
+import { Box, Typography, Paper, Modal, Button } from '@mui/material';
+
+const DiaryPage = ({ userId, onLogout }) => {
+  const UNAUTHORIZED_LOGOUT_MESSAGE = "Token expired. Please log in again!";
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [diaryEntries, setDiaryEntries] = useState([]);
   const [diaryEntry, setDiaryEntry] = useState({});
@@ -25,6 +30,8 @@ const DiaryPage = () => {
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
   const [deleteEntryId, setDeleteEntryId] = useState(null);
   const [diaryTitle, setDiaryTitle] = useState("");
+
+  const [isLoadingResponse, setIsLoadingResponse] = useState(false);
 
   let navigate = useNavigate();
 
@@ -55,21 +62,26 @@ const DiaryPage = () => {
   };
 
   const addDiaryEntry = () => {
-    diaryEntryService.add("").then((response) => {
+    diaryEntryService.add("", userId).then((response) => {
       getDiaryEntries();
       setCurrentIndex(0);
       navigate("/diary");
     }).catch((e) => {
       console.log(e);
+      if (e.response && e.response.status === 401) {
+        onLogout(UNAUTHORIZED_LOGOUT_MESSAGE);
+      }
     });
   };
 
   const getDiaryEntries = () => {
     diaryEntryService.readAll().then((response) => {
       setDiaryEntries(response.data);
-      console.log(response.data);
     }).catch((e) => {
       console.log(e);
+      if (e.response && e.response.status === 401) {
+        onLogout(UNAUTHORIZED_LOGOUT_MESSAGE);
+      }
     });
   };
 
@@ -87,24 +99,64 @@ const DiaryPage = () => {
         navigate("/diary");
       }).catch((e) => {
         console.log(e);
+        if (e.response && e.response.status === 401) {
+          onLogout(UNAUTHORIZED_LOGOUT_MESSAGE);
+        }
       });
       setIsDeletePopupOpen(false);
       setDeleteEntryId(null);
+      setCurrentIndex(0);
     }
   };
 
   const saveDiaryEntry = (id, content) => {
+    setIsLoadingResponse(true);
     diaryEntryService.updateDiaryEntry(id, content).then((response) => {
       getDiaryEntries();
+      setIsLoadingResponse(false);
     }).catch((e) => {
       console.log(e);
+      if (e.response && e.response.status === 401) {
+        onLogout(UNAUTHORIZED_LOGOUT_MESSAGE);
+      }
     });
   };
 
+  const DeleteModal = (
+    <Modal
+      open={isDeletePopupOpen}
+      onClose={() => setIsDeletePopupOpen(false)}
+    >
+      <Box sx={styles.modalBox}>
+        <Typography variant="h6" component="h2" align="center">
+          Are you sure you want to delete this entry?
+        </Typography>
+        <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-around' }}>
+          <Button 
+            variant="contained" 
+            color="primary"
+            onClick={deleteDiaryEntry}
+            sx={{ padding: '10px 20px', fontSize: '16px', backgroundColor: '#4CAF50' }}
+          >
+            Delete
+          </Button>
+          <Button 
+            variant="contained" 
+            color="primary" 
+            onClick={() => setIsDeletePopupOpen(false)}
+            sx={{ padding: '10px 20px', fontSize: '16px', backgroundColor: '#f44336' }}
+          >
+            Cancel
+          </Button>
+        </Box>
+      </Box>
+    </Modal>
+  );
+
   return (
-    <div className="diary-page" style={{ display: 'flex', height: '100vh' }}>
-      {/* Main Content Area */}
-      <div className="diary-content" style={{ flex: 1, overflowY: 'auto', padding: '20px' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+      {/* Content Area */}
+      <Box sx={{ flex: 1, mr: 2 }}>
         {diaryEntries.length > 0 ? (
           <DiaryArea
             diaryId={diaryId}
@@ -116,66 +168,16 @@ const DiaryPage = () => {
             saveDiaryEntry={saveDiaryEntry}
             deleteDiaryEntry={confirmDeleteDiary}
             getFormattedTimestamp={getFormattedTimestamp}
+            isLoadingResponse={isLoadingResponse}
           />
         ) : (
           <p>No diary entries found. Please add a new entry.</p>
         )}
+        {DeleteModal}
+      </Box>
 
-        {/* Delete Confirmation Popup */}
-        <Popup
-          open={isDeletePopupOpen}
-          closeOnDocumentClick
-          onClose={() => setIsDeletePopupOpen(false)}
-          contentStyle={{
-            width: '300px',
-            padding: '20px',
-            backgroundColor: '#f1f1f1',
-            textAlign: 'center',
-            borderRadius: '10px',
-            boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
-          }}
-          modal
-        >
-          <div>
-            <h3 style={{ marginBottom: '20px', fontSize: '18px' }}>
-              Are you sure you want to delete this entry?
-            </h3>
-            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-              <button
-                onClick={deleteDiaryEntry}
-                style={{
-                  padding: '10px 20px',
-                  border: 'none',
-                  borderRadius: '5px',
-                  fontSize: '16px',
-                  cursor: 'pointer',
-                  backgroundColor: '#4CAF50',
-                  color: '#ffffff',
-                }}
-              >
-                OK
-              </button>
-              <button
-                onClick={() => setIsDeletePopupOpen(false)}
-                style={{
-                  padding: '10px 20px',
-                  border: 'none',
-                  borderRadius: '5px',
-                  fontSize: '16px',
-                  cursor: 'pointer',
-                  backgroundColor: '#f44336',
-                  color: '#ffffff',
-                }}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </Popup>
-      </div>
-
-      {/* Sidebar on the Right */}
-      <div style={{ width: '250px', flexShrink: 0 }}>
+      {/* Sidebar */}
+      <Box sx={{ width: 250 }}>
         <DiarySidebar 
           currentIndex={currentIndex}
           setCurrentIndex={setCurrentIndex}
@@ -183,9 +185,24 @@ const DiaryPage = () => {
           addDiaryEntry={addDiaryEntry}
           getFormattedTimestamp={getFormattedTimestamp}
         />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
+
+const styles = {
+  modalBox: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: '#f1f1f1',
+    border: '2px solid #000',
+    borderRadius: '10px',
+    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+    p: 4,
+  }
+}
 
 export default DiaryPage;

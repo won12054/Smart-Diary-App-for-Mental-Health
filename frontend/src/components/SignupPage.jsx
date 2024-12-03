@@ -1,7 +1,47 @@
 import React, { useState } from 'react';
-import { Modal, Box } from '@mui/material';
+import { 
+  Modal, 
+  Box, 
+  Typography,
+  TextField,
+  InputAdornment,
+  IconButton,
+  Checkbox,
+  Link,
+  Alert,
+  Button
+} from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
-const SignUpPage = ({ onSignUp }) => {
+// Import services
+import authService from "../services/auth-service";
+
+const tac = `Before signing up, please review and agree to the following terms:
+1. Purpose of Data Collection.
+The purpose of this application is to provide a platform where users can:
+•	Write and manage personal diary entries.
+•	Track mental health trends and receive personalized insights.
+•	Access features such as diary entries and dashboards.
+2. Information We Collect.
+When you register and use this application, we may collect the following information:
+•	Personal Information: Name, email address, username, and password.
+•	Diary Entries: Content you write in your diary, including any mental health-related data you choose to share.
+3. How Your Data Will Be Used.
+We respect your privacy and will use your data responsibly. Your information will be used for:
+•	Providing and improving application features and functionalities.
+•	Analyzing data to generate personalized insights and mental health trends.
+•	Enhancing user experience and ensuring secure usage of the platform.
+4. Privacy and Data Sharing.
+•	Your diary entries will only be summarized locally before sharing any data externally.
+•	Only the summarized text will be sent to third party for analysis. The original diary content will remain private and will not be shared outside the application.
+5. Limitations of AI.
+•	The AI model used in this application is designed to provide insights, but it may occasionally produce inaccurate or incomplete results.
+•	This application is not a substitute for professional advice, such as medical or mental health consultation.
+6. Agreement.
+•	By signing up, you agree to these terms and conditions and understand the purpose and limitations of this application.
+`;
+
+const SignUpPage = ({ onLogin }) => {
   const [name, setName] = useState('');
   const [username, setUsername] = useState(''); 
   const [email, setEmail] = useState('');
@@ -9,6 +49,12 @@ const SignUpPage = ({ onSignUp }) => {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [error, setError] = useState('');
   const [showTermsModal, setShowTermsModal] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,8 +65,19 @@ const SignUpPage = ({ onSignUp }) => {
       return;
     }
 
-    // Call the sign-up function with the user data
-    onSignUp({ name, username, email, password }); // Include username in the signup data
+    // Sign Up and then Log In
+    authService.signUpUser(name, username, email, password)
+      .then((response) => {
+        return authService.login(username, password);
+      })
+      .then((loginResponse) => {
+        const accessToken = loginResponse.data.access_token;
+        localStorage.setItem("accessToken", accessToken);
+        onLogin();
+      })
+      .catch((e) => {
+        setError('Something went wrong. Please try again!');
+      });
   };
 
   const handleAcceptTerms = () => {
@@ -32,94 +89,141 @@ const SignUpPage = ({ onSignUp }) => {
     setShowTermsModal(false); // Close the modal
   };
 
-  return (
-    <div style={styles.mainContainer}>
-      <div style={styles.container}>
-        <h2>Sign Up</h2>
-        <form onSubmit={handleSubmit} style={styles.form}>
-          <label style={styles.label}>
-            Name:
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              style={styles.input}
-              required
-            />
-          </label>
-          <label style={styles.label}>
-            Username: {/* New Username Field */}
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              style={styles.input}
-              required
-            />
-          </label>
-          <label style={styles.label}>
-            Email:
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              style={styles.input}
-              required
-            />
-          </label>
-          <label style={styles.label}>
-            Password:
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              style={styles.input}
-              required
-            />
-          </label>
-          <label style={styles.checkboxLabel}>
-            <input
-              type="checkbox"
-              checked={termsAccepted} 
-              onChange={() => setTermsAccepted(!termsAccepted)} 
-            />
-            I agree to the <a href="#" onClick={() => setShowTermsModal(true)} style={styles.link}>terms and conditions</a>
-          </label>
-          {error && <p style={styles.error}>{error}</p>}
-          <button type="submit" style={styles.button}>Sign Up</button>
-        </form>
-      </div>
-
-      {/* Terms and Conditions Modal */}
-      <Modal
-        open={showTermsModal}
-        onClose={handleCloseModal}
-        aria-labelledby="terms-and-conditions-title"
-        aria-describedby="terms-and-conditions-content"
+  const TermsAndConditionsModal = (
+    <Modal
+      open={showTermsModal}
+      onClose={handleCloseModal}
+      aria-labelledby="terms-and-conditions-title"
+      aria-describedby="terms-and-conditions-content"
+    >
+      <Box
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 400,
+          bgcolor: 'background.paper',
+          boxShadow: 24,
+          p: 4,
+          borderRadius: 1,
+        }}
       >
-        <Box sx={styles.modalBox}>
-          <h2 id="terms-and-conditions-title">Terms and Conditions</h2>
-          <div style={styles.termsContent}>
-            <p>Terms and Conditions</p>
-            <p>Please read the terms and conditions carefully.</p>
-          </div>
-          <div style={styles.modalButtonContainer}>
-            <button
-              style={{ ...styles.button, marginTop: '20px' }}
-              onClick={handleAcceptTerms}
-            >
-              Accept
-            </button>
-            <button
-              style={{ ...styles.button, marginTop: '20px', backgroundColor: '#f44336' }} // Red color for the close button
-              onClick={handleCloseModal}
-            >
-              Close
-            </button>
-          </div>
+        <Typography variant="h6" id="terms-and-conditions-title" mb={2}>
+          Terms and Conditions
+        </Typography>
+        <Box sx={{
+          maxHeight: 500,
+          overflowY: "auto",
+        }}>
+          <Typography id="terms-and-conditions-content" variant="body2" mb={2} sx={{whiteSpace: "pre-line"}}>
+            {tac}
+          </Typography>
         </Box>
-      </Modal>
-    </div>
+        
+        <Box display="flex" justifyContent="space-between" mt={3}>
+          <Button variant="contained" color="primary" onClick={handleAcceptTerms}>
+            Accept
+          </Button>
+          <Button variant="contained" color="error" onClick={handleCloseModal}>
+            Close
+          </Button>
+        </Box>
+      </Box>
+    </Modal>
+  );
+
+
+  return (
+    <Box
+      sx={{
+        maxWidth: 500,
+        mx: 'auto',
+        width: '100%',
+        mt: 3,
+        p: 3,
+        boxShadow: 3,
+        borderRadius: 2,
+      }}
+    >
+      <Typography variant="h5" align="center" mb={3}>
+        Sign Up
+      </Typography>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          label="Name"
+          name="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Username"
+          name="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Email"
+          name="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Password"
+          name="password"
+          type={showPassword ? 'text' : 'password'}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          fullWidth
+          margin="normal"
+          slotProps={{
+            input: {
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={togglePasswordVisibility}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            },
+          }}
+        />
+        <Box display="flex" alignItems="center" mt={2}>
+          <Checkbox
+            checked={termsAccepted}
+            onChange={() => setTermsAccepted(!termsAccepted)}
+          />
+          <Typography>
+            I agree to the <Link href="#" onClick={() => setShowTermsModal(true)}>terms and conditions</Link>
+          </Typography>
+        </Box>
+        {error && (
+          <Alert severity="error" sx={{ mt: 2 }}>
+            {error}
+          </Alert>
+        )}
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          type="submit"
+          sx={{ mt: 2 }}
+        >
+          Sign Up
+        </Button>
+      </form>
+      {TermsAndConditionsModal}
+    </Box>
   );
 };
 

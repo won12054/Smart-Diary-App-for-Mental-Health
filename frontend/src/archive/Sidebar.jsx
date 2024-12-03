@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Box } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import BookIcon from '@mui/icons-material/Book';
-import ChatIcon from '@mui/icons-material/Chat';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout'; 
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'; // Admin Icon
 import logo from '../images/wellmind-logo-clean.png';
@@ -69,15 +69,6 @@ const Sidebar = ({ onLogout, userRole }) => {
                   <ListItemText primary="Diary" />
                 </ListItemButton>
               </ListItem>
-
-              <ListItem disablePadding>
-                <ListItemButton component={Link} to="/chatbot">
-                  <ListItemIcon>
-                    <ChatIcon sx={{ color: '#ffeb3b' }} />
-                  </ListItemIcon>
-                  <ListItemText primary="Chatbot" />
-                </ListItemButton>
-              </ListItem>
             </>
           )}
 
@@ -92,6 +83,16 @@ const Sidebar = ({ onLogout, userRole }) => {
               </ListItemButton>
             </ListItem>
           )}
+
+          
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/profile">
+              <ListItemIcon>
+                <AccountCircleIcon sx={{ color: '#ffeb3b' }} />
+              </ListItemIcon>
+              <ListItemText primary="My Profile" />
+            </ListItemButton>
+          </ListItem>
 
           {/* Logout Button */}
           <ListItem disablePadding>

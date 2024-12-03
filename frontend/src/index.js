@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals';
 // Import styles
 import './styles/index.css';
 
+document.title = 'Well-Mind';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

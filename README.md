@@ -1,10 +1,4 @@
 # AICapstone
-By
-Alejandro Akifarry,
-Jungyu Lee,
-Pak Wah Wong, 
-Pratheepan Gunaratnam, 
-Sirada Thoungvitayasutee 
 
 ## For the backend
 1. Modify environment variables inside the file '.env.example' and then save as '.env'
@@ -21,6 +15,8 @@ pip install "passlib[bcrypt]"
 pip install astrapy
 pip install scikit-learn
 pip install sentence-transformers
+pip install pytest
+pip install vaderSentiment
 ```
 3. Install [PyTorch](https://pytorch.org/get-started/locally/)
 ```console
@@ -39,15 +35,19 @@ fastapi dev main.py
 ```console
 taskkill /f /im python.exe
 ```
+7. To run the unit test:
+```console
+cd backend/app
+* Example Command: 
+pytest tests/test_openai_service.py 
+pytest tests/test_vectordb_service.py::TestVectoredService::test_generate_advice_successful
+```
 
 ## For the frontend
 1. Install dependencies
 ```console
 npm install
-npm install reactjs-popup
-npm install @mui/icons-material
-npm install @mui/material
-npm install file-saver
+
 ```
 2. Run app
 ```console

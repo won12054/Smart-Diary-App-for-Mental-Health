@@ -1,7 +1,6 @@
 import openai
 from dotenv import load_dotenv
 import os
-from fastapi import HTTPException, Request
 import logging
 
 logging.basicConfig(level=logging.INFO)

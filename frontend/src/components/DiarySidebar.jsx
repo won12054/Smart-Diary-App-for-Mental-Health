@@ -1,7 +1,6 @@
 import React from 'react';
-import { Box, Button, List, ListItem, ListItemButton, ListItemText, Divider } from '@mui/material';
+import { Paper, Box, Button, List, ListItem, ListItemButton, ListItemText, Divider } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import '../styles/DiarySidebar.css'; // For custom styles
 
 const DiarySidebar = ({ 
   currentIndex, 
@@ -21,39 +20,17 @@ const DiarySidebar = ({
   };
 
   return (
-    <Box 
-      className="diary-sidebar" 
-      sx={{
-        padding: 2,
-        width: 250, // Adjusted width
-        backgroundColor: '#f9f9f9',
-        borderRadius: 2,
-        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100vh', // Full height to fit the viewport
-        position: 'relative', // Ensures it's part of the main layout, not fixed
-      }}
-    >
+    <Paper sx={{ p: 3 }}>
       <Button
         variant="contained"
         color="primary"
         startIcon={<AddIcon />}
         onClick={handleAddClick}
-        sx={{
-          marginBottom: 2,
-          width: '100%',
-          textTransform: 'none',
-          backgroundColor: '#4CAF50',
-          ':hover': {
-            backgroundColor: '#388E3C',
-          }
-        }}
+        sx={styles.addButton}
       >
         Add New Entry
       </Button>
       <Divider sx={{ marginBottom: 2 }} />
-
       <List className="diary-items" sx={{ overflowY: 'auto', flexGrow: 1 }}>
         {diaryEntries.map(({ _id, created }, index) => (
           <ListItem key={_id} disablePadding>
@@ -69,13 +46,25 @@ const DiarySidebar = ({
                 }
               }}
             >
-              <ListItemText primary={getFormattedTimestamp(created)} />
+              <ListItemText primary={getFormattedTimestamp(created)} sx={{textAlign: "center"}} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
-    </Box>
+    </Paper>
   );
 };
+
+const styles = {
+  addButton: {
+    marginBottom: 2,
+    width: '100%',
+    textTransform: 'none',
+    backgroundColor: '#4CAF50',
+    ':hover': {
+      backgroundColor: '#388E3C',
+    }
+  },
+}
 
 export default DiarySidebar;

@@ -21,11 +21,9 @@ class DiaryEntry(BaseModel):
         json_schema_extra = {
             "example": {
                 "_id": "066de609-b04a-4b30-b46c-32537c7f1f6e",
-                "author": "Miguel de Cervantes",
+                "author": "69b02b85-4141-4a42-a15c-7437e2eab455",
                 "entry_date": "2032-04-23T10:20:30.400+02:30",
-                "content": "...",
-                "prediction": "Happy",
-                "advice": "Be positive",
+                "content": "I go to school by bus",
                 "created": "2032-04-23T10:20:30.400+02:30",
                 "updated": "2032-04-23T10:20:30.400+02:30"
             }
