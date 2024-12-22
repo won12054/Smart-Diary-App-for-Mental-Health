@@ -445,7 +445,7 @@ async def get_prediction_summary(
             "Suicide Watch": 20,
             "Bipolar": 15,
             "Anxiety": 5,
-            "Off My Chest": 2,
+            "Off My Chest": 0,
         }
 
         predictions = {}
